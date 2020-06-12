@@ -21,6 +21,8 @@ public class Intake extends SubsystemBase {
         intakeMotor.burnFlash();
     }
 
+    
+
     public void setSpeed(double speed) {
         intakeMotor.set(speed);
     }

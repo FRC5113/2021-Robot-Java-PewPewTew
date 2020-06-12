@@ -45,6 +45,9 @@ public final class Constants {
         public static final int EXT_INDEXER_ID = 32;
         public static final int MID_INDEXER_ID = 33;
 
+        public static final int BEAM_BREAK_INPUT_ID = 5;
+        public static final int BEAM_BREAK_OUTPUT_ID = 6;
+
     }
     
 }
