@@ -113,14 +113,14 @@ public class Indexer extends SubsystemBase {
 
     public int getState() {
 
-        if (!indexStarted && !indexHappening && !indexDone && getStartInput())
+        /*if (!indexStarted && !indexHappening && !indexDone && getStartInput())
             state = 0;
         else if (indexStarted && !indexHappening && !indexDone && !getStartInput())
             state = 1;
         else if (!indexStarted && indexHappening && !indexDone && getStartInput())
             state = 2;
         else
-            state = 3;
+            state = 3;*/
 
         return state;
     }

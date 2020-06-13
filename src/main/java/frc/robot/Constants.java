@@ -26,7 +26,7 @@ public final class Constants {
 
         public static final double DRIVE_MAX_VOLTAGE = 12.3;
         public static final double RAMP_RATE = 0.3;
-        public static final double DEADBAND = 0.05;
+        public static final double DEADBAND = 0.04;
     
     }
 

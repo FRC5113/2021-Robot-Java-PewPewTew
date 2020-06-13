@@ -9,25 +9,28 @@ public class DriveCommand extends CommandBase {
 
     private DriveTrain driveTrain;
 
-    private double leftValue;
-    private double rightValue;
+    private DoubleSupplier leftValue;
+    private DoubleSupplier rightValue;
 
     public DriveCommand(DriveTrain driveTrain, DoubleSupplier leftVal, DoubleSupplier rightVal) {
-        addRequirements(driveTrain);
         this.driveTrain = driveTrain;
-        this.leftValue = leftVal.getAsDouble();
-        this.leftValue = rightVal.getAsDouble();
+        addRequirements(driveTrain);
+        this.leftValue = leftVal;
+        this.rightValue = rightVal;
     }
 
     @Override
     public void initialize() {
-        this.leftValue = 0.5 * Math.pow(leftValue, 3) + 0.5 * (leftValue);
-        this.rightValue = 0.5 * Math.pow(rightValue, 3) + 0.5 * (rightValue);
     }
 
     @Override
     public void execute() {
-        driveTrain.tankDrive(leftValue, rightValue);
+        //driveTrain.tankDrive(-scale(leftValue.getAsDouble()), -scale(rightValue.getAsDouble()));
+        driveTrain.curvatureDrive(-scale(leftValue.getAsDouble()), rightValue.getAsDouble());
+    }
+
+    public double scale(double value) {
+        return (0.5 * Math.pow(value, 3) + 0.5 * (value));
     }
 
 }

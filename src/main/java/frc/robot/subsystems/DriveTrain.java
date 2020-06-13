@@ -88,4 +88,11 @@ public class DriveTrain extends SubsystemBase {
         rightSlave.setNeutralMode(NeutralMode.Coast);
     }
 
+    public void setAllToBrake() {
+        leftMaster.setNeutralMode(NeutralMode.Brake);
+        rightMaster.setNeutralMode(NeutralMode.Brake);
+        leftSlave.setNeutralMode(NeutralMode.Brake);
+        rightSlave.setNeutralMode(NeutralMode.Brake);
+    }
+
 }

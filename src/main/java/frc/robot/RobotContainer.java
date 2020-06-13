@@ -9,8 +9,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.DriveTrain;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -25,6 +27,11 @@ public class RobotContainer {
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   private Compressor compressor = new Compressor();
+  public DriveTrain driveTrain = new DriveTrain();
+
+  private Joystick leftDriveJoystick = new Joystick(0);
+  private Joystick rightDriveJoystick = new Joystick(1);
+
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
@@ -40,6 +47,13 @@ public class RobotContainer {
   private void configureButtonBindings() {
   }
 
+  public double getDriveLeftVal() {
+    return leftDriveJoystick.getY();
+  }
+
+  public double getDriveRightVal() {
+    return rightDriveJoystick.getX();
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

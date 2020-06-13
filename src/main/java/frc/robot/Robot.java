@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.DriveCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -54,6 +55,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    m_robotContainer.driveTrain.setAllToCoast();
   }
 
   @Override
@@ -66,6 +68,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_robotContainer.driveTrain.setAllToBrake();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -89,6 +92,14 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    m_robotContainer.driveTrain.setAllToBrake();
+
+    m_robotContainer.driveTrain.setDefaultCommand(new DriveCommand(
+      m_robotContainer.driveTrain, 
+      () -> m_robotContainer.getDriveLeftVal(), 
+      () -> m_robotContainer.getDriveRightVal()));
+
   }
 
   /**
@@ -100,7 +111,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
-    // Cancels all running commands at the start of test mode.
+    // Cancels all running commands a
     CommandScheduler.getInstance().cancelAll();
   }
 
