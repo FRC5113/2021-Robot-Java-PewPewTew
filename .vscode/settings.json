@@ -1,5 +1,7 @@
 {
   "java.configuration.updateBuildConfiguration": "automatic",
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,

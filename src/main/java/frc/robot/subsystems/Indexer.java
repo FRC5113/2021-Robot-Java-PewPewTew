@@ -16,7 +16,7 @@ public class Indexer extends SubsystemBase {
 
     private CANSparkMax extMotor;
     private CANSparkMax midMotor;
-    
+
     private boolean indexStarted = false;
     private boolean indexHappening = false;
     private boolean indexDone = false;
@@ -24,7 +24,7 @@ public class Indexer extends SubsystemBase {
 
     // Digital Sensor port for Beambreak
     // beambreakStart is the sensor that is closest to the turret
-    private DigitalInput beamBreakStartInput = new DigitalInput(BEAM_BREAK_INPUT_ID); 
+    private DigitalInput beamBreakStartInput = new DigitalInput(BEAM_BREAK_INPUT_ID);
     private DigitalOutput beamBreakStartOutput = new DigitalOutput(BEAM_BREAK_OUTPUT_ID);
 
     public Indexer() {
@@ -66,6 +66,10 @@ public class Indexer extends SubsystemBase {
     }
 
     // ALL STATE MACHINE STUFF
+
+    public boolean getStartInput() {
+        return beamBreakStartInput.get();
+    }
 
     public boolean getIndexingStarted() {
         return indexStarted;
@@ -113,14 +117,14 @@ public class Indexer extends SubsystemBase {
 
     public int getState() {
 
-        /*if (!indexStarted && !indexHappening && !indexDone && getStartInput())
+        if (!indexStarted && !indexHappening && !indexDone && getStartInput())
             state = 0;
         else if (indexStarted && !indexHappening && !indexDone && !getStartInput())
             state = 1;
         else if (!indexStarted && indexHappening && !indexDone && getStartInput())
             state = 2;
         else
-            state = 3;*/
+            state = 3;
 
         return state;
     }

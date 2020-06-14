@@ -67,7 +67,10 @@ public class DriveTrain extends SubsystemBase {
     public void curvatureDrive(double speed, double rotation) {
         // Curvature drive is subset of arcade drive seems interesting ... I'll try
         // testing it
-        driveBase.curvatureDrive(speed, rotation, true);
+        if (speed <0.25)
+            driveBase.curvatureDrive(speed, rotation, true);
+        else
+            driveBase.curvatureDrive(speed, rotation, false);
 
         /**
          * These should help to control curvature drive, but testing needs to be done
@@ -79,6 +82,10 @@ public class DriveTrain extends SubsystemBase {
     public void triggerDrive(double forward, double reverse, double rotation) {
         // Basically how driving works in Forza, uses triggers
         driveBase.arcadeDrive(forward - reverse, rotation);
+    }
+
+    public void setMaxOutput(double max) {
+        driveBase.setMaxOutput(max);
     }
 
     public void setAllToCoast() {

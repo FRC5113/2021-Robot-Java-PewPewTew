@@ -25,8 +25,9 @@ public class DriveCommand extends CommandBase {
 
     @Override
     public void execute() {
-        //driveTrain.tankDrive(-scale(leftValue.getAsDouble()), -scale(rightValue.getAsDouble()));
-        driveTrain.curvatureDrive(-scale(leftValue.getAsDouble()), rightValue.getAsDouble());
+        // driveTrain.tankDrive(scale(leftValue.getAsDouble()),
+        // scale(rightValue.getAsDouble()));
+        driveTrain.curvatureDrive(scale(leftValue.getAsDouble()), rightValue.getAsDouble());
     }
 
     public double scale(double value) {
