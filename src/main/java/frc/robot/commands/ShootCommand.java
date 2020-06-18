@@ -22,7 +22,7 @@ public class ShootCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        shooter.setSpeed(0);
+        shooter.coast();
     }
 
 }

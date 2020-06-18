@@ -10,6 +10,8 @@ package frc.robot;
 import static frc.robot.Constants.JoystickConstants.xboxAButton;
 import static frc.robot.Constants.JoystickConstants.xboxLeftBumper;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -17,8 +19,11 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.CenterTargetRobot;
 import frc.robot.commands.ShootCommand;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
 /**
@@ -36,11 +41,12 @@ public class RobotContainer {
    */
   private Compressor compressor = new Compressor();
   public DriveTrain driveTrain = new DriveTrain();
+  public Limelight limelight = new Limelight();
   public Shooter shooter = new Shooter();
 
   private Joystick leftDriveJoystick = new Joystick(0);
   private Joystick rightDriveJoystick = new Joystick(1);
-  private XboxController driveController = new XboxController(2);
+  public XboxController driveController = new XboxController(2);
 
   public RobotContainer() {
     // Configure the button bindings
@@ -59,8 +65,11 @@ public class RobotContainer {
         .whenPressed(() -> driveTrain.setMaxOutput(0.5))
         .whenReleased(() -> driveTrain.setMaxOutput(1));
 
-    new JoystickButton(driveController,xboxAButton)
-        .whileHeld(new ShootCommand(shooter, 0.5));
+    new Trigger(() -> (driveController.getTriggerAxis(Hand.kRight) > 0.75))
+        .whileActiveContinuous(new ShootCommand(shooter, 6000));
+        
+    new Trigger(() -> (driveController.getTriggerAxis(Hand.kLeft) > 0.75))
+        .whileActiveContinuous(new CenterTargetRobot(driveTrain, limelight));
   }
 
   public double getDriveLeftVal() {

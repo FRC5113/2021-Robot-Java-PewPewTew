@@ -55,8 +55,8 @@ public class DriveTrain extends SubsystemBase {
 
     public void tankDriveVolts(double leftSpeed, double rightSpeed) {
         // Tank drive, but in the case we want to use volts, it's here
-        leftMaster.setVoltage(12.3 * leftSpeed);
-        rightMaster.setVoltage(12.3 * rightSpeed);
+        leftMaster.setVoltage(DRIVE_MAX_VOLTAGE * leftSpeed);
+        rightMaster.setVoltage(DRIVE_MAX_VOLTAGE * rightSpeed);
     }
 
     public void arcadeDrive(double speed, double rotation) {
@@ -67,7 +67,7 @@ public class DriveTrain extends SubsystemBase {
     public void curvatureDrive(double speed, double rotation) {
         // Curvature drive is subset of arcade drive seems interesting ... I'll try
         // testing it
-        if (speed <0.25)
+        if (speed < 0.25)
             driveBase.curvatureDrive(speed, rotation, true);
         else
             driveBase.curvatureDrive(speed, rotation, false);

@@ -27,6 +27,10 @@ public class Shooter extends SubsystemBase {
         shooterMaster.configVoltageCompSaturation(MAX_VOLTAGE);
         shooterMaster.enableVoltageCompensation(true);
 
+        shooterMaster.config_kP(0, kP);
+        shooterMaster.config_kI(0, kI);
+        shooterMaster.config_kD(0, kD);
+
         shooterMaster.setInverted(false);
         shooterSlave.setInverted(true);
 
@@ -42,7 +46,15 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setSpeed(double speed) {
-        shooterMaster.set(speed);
+        shooterMaster.set(ControlMode.Velocity, speed/CONVERSION_RATE);
+        SmartDashboard.putNumber("Velocity", shooterMaster.getSelectedSensorVelocity()*CONVERSION_RATE);
+    }
+
+    public void coast() {
+        shooterMaster.set(0);
+    }
+
+    public void getSpeed() {
         SmartDashboard.putNumber("Velocity", shooterMaster.getSelectedSensorVelocity()*CONVERSION_RATE);
     }
 

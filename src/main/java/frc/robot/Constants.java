@@ -33,6 +33,16 @@ public final class Constants {
 
     }
 
+    public final static class LimelightConstants {
+
+        public static final double ANGLE = 25.0;
+
+        public static final double kP = 0.055;
+        public static final double kI = 0.000;
+        public static final double kD = 0.002;
+
+    }
+
     public final static class DriveTrainConstants {
 
         public static final int LEFT_MASTER_ID = 11;
@@ -42,7 +52,7 @@ public final class Constants {
 
         public static final double DRIVE_MAX_VOLTAGE = 12.0;
         public static final double RAMP_RATE = 0.6;
-        public static final double DEADBAND = 0.08;
+        public static final double DEADBAND = 0.1;
 
     }
 
@@ -72,7 +82,11 @@ public final class Constants {
         public static final int SHOOTER_SLAVE_ID = 31;
         public static final double MAX_VOLTAGE = 12.0;
 
-        public static final double CONVERSION_RATE = 600/2048;
+        public static final double CONVERSION_RATE = 600.0 / 2048;
+
+        public static final double kP = 2.3;
+        public static final double kI = 0.00012;
+        public static final double kD = 5;
 
     }
 
