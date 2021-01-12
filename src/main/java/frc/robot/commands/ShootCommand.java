@@ -9,7 +9,7 @@ public class ShootCommand extends CommandBase {
 
     private final Shooter shooter;
 
-    public  ShootCommand(Shooter shooter, double speed) {
+    public ShootCommand(Shooter shooter, double speed) {
         this.shooter = shooter;
         addRequirements(shooter);
         this.speed = speed;

@@ -24,9 +24,6 @@ public class Shooter extends SubsystemBase {
 
         shooterSlave.set(ControlMode.Follower, shooterMaster.getDeviceID());
 
-        shooterMaster.configVoltageCompSaturation(MAX_VOLTAGE);
-        shooterMaster.enableVoltageCompensation(true);
-
         shooterMaster.config_kP(0, kP);
         shooterMaster.config_kI(0, kI);
         shooterMaster.config_kD(0, kD);
