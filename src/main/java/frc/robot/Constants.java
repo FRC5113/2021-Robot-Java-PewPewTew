@@ -84,9 +84,9 @@ public final class Constants {
 
         public static final double CONVERSION_RATE = 600.0 / 2048;
 
-        public static final double kP = 2.3;
+        public static final double kP = 0.1;
         public static final double kI = 0.00012;
-        public static final double kD = 5;
+        public static final double kD = 0;
 
     }
 
