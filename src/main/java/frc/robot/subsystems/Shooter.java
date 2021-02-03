@@ -37,6 +37,7 @@ public class Shooter extends SubsystemBase {
         motor.configFactoryDefault();
         motor.configVoltageCompSaturation(MAX_VOLTAGE);
         motor.enableVoltageCompensation(true);
+        motor.configClosedloopRamp(RAMP_RATE);
         motor.setInverted(master);
         motor.setNeutralMode(NeutralMode.Coast);
         motor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
@@ -53,6 +54,10 @@ public class Shooter extends SubsystemBase {
 
     public void getSpeed() {
         SmartDashboard.putNumber("Velocity", shooterMaster.getSelectedSensorVelocity()*CONVERSION_RATE);
+    }
+
+    public void getCurrent() {
+        SmartDashboard.putNumber("Current", shooterMaster.getSupplyCurrent());
     }
 
 }

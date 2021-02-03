@@ -39,7 +39,7 @@ public class RobotContainer {
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
-  private Compressor compressor = new Compressor();
+  //private Compressor compressor = new Compressor();
   public DriveTrain driveTrain = new DriveTrain();
   public Limelight limelight = new Limelight();
   public Shooter shooter = new Shooter();
@@ -51,7 +51,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    compressor.setClosedLoopControl(true);
+    //compressor.setClosedLoopControl(true);
   }
 
   /**

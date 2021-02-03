@@ -117,6 +117,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     m_robotContainer.shooter.getSpeed();
+    m_robotContainer.shooter.getCurrent();
   }
 
   @Override

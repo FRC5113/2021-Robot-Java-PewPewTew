@@ -81,12 +81,13 @@ public final class Constants {
         public static final int SHOOTER_MASTER_ID = 32;
         public static final int SHOOTER_SLAVE_ID = 31;
         public static final double MAX_VOLTAGE = 12.0;
+        public static final double RAMP_RATE = 1.0;
 
         public static final double CONVERSION_RATE = 600.0 / 2048;
 
-        public static final double kP = 0.1;
-        public static final double kI = 0.00012;
-        public static final double kD = 0;
+        public static final double kP = 1;
+        public static final double kI = 0.000062;
+        public static final double kD = 5;
 
     }
 
