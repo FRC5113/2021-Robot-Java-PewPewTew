@@ -12,26 +12,26 @@ import static frc.robot.Constants.DriveTrainConstants.*;
 
 public class DriveTrain extends SubsystemBase {
 
-    private final WPI_TalonFX leftMaster;
-    private final WPI_TalonFX rightMaster;
-    private final WPI_TalonFX leftSlave;
-    private final WPI_TalonFX rightSlave;
+    private final WPI_TalonFX leftParent;
+    private final WPI_TalonFX rightParent;
+    private final WPI_TalonFX leftChild;
+    private final WPI_TalonFX rightChild;
     private final DifferentialDrive driveBase;
 
     public DriveTrain() {
-        leftMaster = new WPI_TalonFX(LEFT_MASTER_ID);
-        rightMaster = new WPI_TalonFX(RIGHT_MASTER_ID);
-        leftSlave = new WPI_TalonFX(LEFT_SLAVE_ID);
-        rightSlave = new WPI_TalonFX(RIGHT_SLAVE_ID);
-        configureMotor(leftMaster, true);
-        configureMotor(rightMaster, false);
-        configureMotor(leftSlave, true);
-        configureMotor(rightSlave, false);
+        leftParent = new WPI_TalonFX(LEFT_PARENT_ID);
+        rightParent = new WPI_TalonFX(RIGHT_PARENT_ID);
+        leftChild = new WPI_TalonFX(LEFT_CHILD_ID);
+        rightChild = new WPI_TalonFX(RIGHT_CHILD_ID);
+        configureMotor(leftParent, true);
+        configureMotor(rightParent, false);
+        configureMotor(leftChild, true);
+        configureMotor(rightChild, false);
 
-        rightSlave.set(ControlMode.Follower, rightMaster.getDeviceID());
-        leftSlave.set(ControlMode.Follower, leftMaster.getDeviceID());
+        rightChild.set(ControlMode.Follower, rightParent.getDeviceID());
+        leftChild.set(ControlMode.Follower, leftParent.getDeviceID());
 
-        driveBase = new DifferentialDrive(leftMaster, rightMaster);
+        driveBase = new DifferentialDrive(leftParent, rightParent);
         driveBase.setDeadband(DEADBAND);
     }
 
@@ -55,8 +55,8 @@ public class DriveTrain extends SubsystemBase {
 
     public void tankDriveVolts(double leftSpeed, double rightSpeed) {
         // Tank drive, but in the case we want to use volts, it's here
-        leftMaster.setVoltage(DRIVE_MAX_VOLTAGE * leftSpeed);
-        rightMaster.setVoltage(DRIVE_MAX_VOLTAGE * rightSpeed);
+        leftParent.setVoltage(DRIVE_MAX_VOLTAGE * leftSpeed);
+        rightParent.setVoltage(DRIVE_MAX_VOLTAGE * rightSpeed);
     }
 
     public void arcadeDrive(double speed, double rotation) {
@@ -89,17 +89,17 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public void setAllToCoast() {
-        leftMaster.setNeutralMode(NeutralMode.Coast);
-        rightMaster.setNeutralMode(NeutralMode.Coast);
-        leftSlave.setNeutralMode(NeutralMode.Coast);
-        rightSlave.setNeutralMode(NeutralMode.Coast);
+        leftParent.setNeutralMode(NeutralMode.Coast);
+        rightParent.setNeutralMode(NeutralMode.Coast);
+        leftChild.setNeutralMode(NeutralMode.Coast);
+        rightChild.setNeutralMode(NeutralMode.Coast);
     }
 
     public void setAllToBrake() {
-        leftMaster.setNeutralMode(NeutralMode.Brake);
-        rightMaster.setNeutralMode(NeutralMode.Brake);
-        leftSlave.setNeutralMode(NeutralMode.Brake);
-        rightSlave.setNeutralMode(NeutralMode.Brake);
+        leftParent.setNeutralMode(NeutralMode.Brake);
+        rightParent.setNeutralMode(NeutralMode.Brake);
+        leftChild.setNeutralMode(NeutralMode.Brake);
+        rightChild.setNeutralMode(NeutralMode.Brake);
     }
 
 }

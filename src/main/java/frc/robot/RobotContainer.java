@@ -7,10 +7,8 @@
 
 package frc.robot;
 
-import static frc.robot.Constants.JoystickConstants.xboxAButton;
 import static frc.robot.Constants.JoystickConstants.xboxLeftBumper;
 
-import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -23,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.CenterTargetRobot;
 import frc.robot.commands.ShootCommand;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.HopUp;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
@@ -42,6 +41,7 @@ public class RobotContainer {
   //private Compressor compressor = new Compressor();
   public DriveTrain driveTrain = new DriveTrain();
   public Limelight limelight = new Limelight();
+  public HopUp hopper = new HopUp();
   public Shooter shooter = new Shooter();
 
   private Joystick leftDriveJoystick = new Joystick(0);
@@ -66,7 +66,7 @@ public class RobotContainer {
         .whenReleased(() -> driveTrain.setMaxOutput(1));
 
     new Trigger(() -> (driveController.getTriggerAxis(Hand.kRight) > 0.75))
-        .whileActiveContinuous(new ShootCommand(shooter, 6000));
+        .whileActiveContinuous(new ShootCommand(shooter, hopper, 6000));
         
     new Trigger(() -> (driveController.getTriggerAxis(Hand.kLeft) > 0.75))
         .whileActiveContinuous(new CenterTargetRobot(driveTrain, limelight));

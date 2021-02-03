@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -13,23 +12,23 @@ import static frc.robot.Constants.ShooterConstants.*;
 
 public class Shooter extends SubsystemBase {
 
-    private WPI_TalonFX shooterSlave;
-    private WPI_TalonFX shooterMaster;
+    private WPI_TalonFX shooterChild;
+    private WPI_TalonFX shooterParent;
 
     public Shooter() {
-        shooterMaster = new WPI_TalonFX(SHOOTER_MASTER_ID);
-        shooterSlave = new WPI_TalonFX(SHOOTER_SLAVE_ID);
-        configMotor(shooterMaster, true);
-        configMotor(shooterSlave, false);
+        shooterParent = new WPI_TalonFX(SHOOTER_PARENT_ID);
+        shooterChild = new WPI_TalonFX(SHOOTER_CHILD_ID);
+        configMotor(shooterParent, true);
+        configMotor(shooterChild, false);
 
-        shooterSlave.set(ControlMode.Follower, shooterMaster.getDeviceID());
+        shooterChild.set(ControlMode.Follower, shooterParent.getDeviceID());
 
-        shooterMaster.config_kP(0, kP);
-        shooterMaster.config_kI(0, kI);
-        shooterMaster.config_kD(0, kD);
+        shooterParent.config_kP(0, kP);
+        shooterParent.config_kI(0, kI);
+        shooterParent.config_kD(0, kD);
 
-        shooterMaster.setInverted(false);
-        shooterSlave.setInverted(true);
+        shooterParent.setInverted(false);
+        shooterChild.setInverted(true);
 
     }
 
@@ -44,20 +43,20 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setSpeed(double speed) {
-        shooterMaster.set(ControlMode.Velocity, speed/CONVERSION_RATE);
-        SmartDashboard.putNumber("Velocity", shooterMaster.getSelectedSensorVelocity()*CONVERSION_RATE);
+        shooterParent.set(ControlMode.Velocity, speed/CONVERSION_RATE);
+        SmartDashboard.putNumber("Velocity", shooterParent.getSelectedSensorVelocity()*CONVERSION_RATE);
     }
 
     public void coast() {
-        shooterMaster.set(0);
+        shooterParent.set(0);
     }
 
     public void getSpeed() {
-        SmartDashboard.putNumber("Velocity", shooterMaster.getSelectedSensorVelocity()*CONVERSION_RATE);
+        SmartDashboard.putNumber("Velocity", shooterParent.getSelectedSensorVelocity()*CONVERSION_RATE);
     }
 
     public void getCurrent() {
-        SmartDashboard.putNumber("Current", shooterMaster.getSupplyCurrent());
+        SmartDashboard.putNumber("Current", shooterParent.getSupplyCurrent());
     }
 
 }

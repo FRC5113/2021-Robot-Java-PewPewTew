@@ -45,12 +45,12 @@ public final class Constants {
 
     public final static class DriveTrainConstants {
 
-        public static final int LEFT_MASTER_ID = 11;
-        public static final int RIGHT_MASTER_ID = 12;
-        public static final int LEFT_SLAVE_ID = 21;
-        public static final int RIGHT_SLAVE_ID = 22;
+        public static final int LEFT_PARENT_ID = 11;
+        public static final int RIGHT_PARENT_ID = 12;
+        public static final int LEFT_CHILD_ID = 21;
+        public static final int RIGHT_CHILD_ID = 22;
 
-        public static final double DRIVE_MAX_VOLTAGE = 12.0;
+        public static final double DRIVE_MAX_VOLTAGE = 12.3;
         public static final double RAMP_RATE = 0.6;
         public static final double DEADBAND = 0.1;
 
@@ -59,10 +59,10 @@ public final class Constants {
     public final static class IntakeConstants {
 
         public static final int INTAKE_ID = 31;
-        public static final double INTAKE_MAX_VOLTAGE = 12.0;
+        public static final double INTAKE_MAX_VOLTAGE = 12.3;
         public static final int INTAKE_CURRENT_LIMIT = 60;
 
-        public static final double INTAKE_SPEED = 60;
+        public static final double INTAKE_SPEED = 0.75;
 
     }
 
@@ -74,12 +74,26 @@ public final class Constants {
         public static final int BEAM_BREAK_INPUT_ID = 5;
         public static final int BEAM_BREAK_OUTPUT_ID = 6;
 
+        public static final int INDEXER_MAX_CURRENT = 40;
+        public static final double INDEXER_MAX_VOLTAGE = 12.3;
+        public static final double EXT_INDEXER_SPEED = 0.75;
+        public static final double MID_INDEXER_SPEED = 0.75;
+    
+    }
+
+    public final static class HopUpConstants {
+
+        public static final int HOPUP_ID = 34;
+
+        public static final int HOPUP_MAX_CURRENT = 30;
+        public static final double HOPUP_MAX_VOLTAGE = 12.3;
+
     }
 
     public final static class ShooterConstants {
 
-        public static final int SHOOTER_MASTER_ID = 32;
-        public static final int SHOOTER_SLAVE_ID = 31;
+        public static final int SHOOTER_PARENT_ID = 42;
+        public static final int SHOOTER_CHILD_ID = 41;
         public static final double MAX_VOLTAGE = 12.0;
         public static final double RAMP_RATE = 1.0;
 

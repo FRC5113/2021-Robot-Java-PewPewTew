@@ -5,14 +5,14 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DigitalOutput;
+//import edu.wpi.first.wpilibj.DigitalOutput; might be pointless (see below)
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.IndexerConstants.*;
 
 public class Indexer extends SubsystemBase {
 
-    public int BALL_COUNT = 3;
+    private int BALL_COUNT = 3;
 
     private CANSparkMax extMotor;
     private CANSparkMax midMotor;
@@ -25,7 +25,8 @@ public class Indexer extends SubsystemBase {
     // Digital Sensor port for Beambreak
     // beambreakStart is the sensor that is closest to the turret
     private DigitalInput beamBreakStartInput = new DigitalInput(BEAM_BREAK_INPUT_ID);
-    private DigitalOutput beamBreakStartOutput = new DigitalOutput(BEAM_BREAK_OUTPUT_ID);
+    //private DigitalOutput beamBreakStartOutput = new DigitalOutput(BEAM_BREAK_OUTPUT_ID); 
+    //might be pointless (see above)
 
     public Indexer() {
         extMotor = new CANSparkMax(EXT_INDEXER_ID, MotorType.kBrushless);
@@ -39,18 +40,19 @@ public class Indexer extends SubsystemBase {
     private void configureMotor(CANSparkMax motor) {
         motor.restoreFactoryDefaults();
         motor.setIdleMode(IdleMode.kBrake);
-        motor.setSmartCurrentLimit(50);
-        motor.enableVoltageCompensation(12);
+        motor.setSmartCurrentLimit(INDEXER_MAX_CURRENT);
+        motor.enableVoltageCompensation(INDEXER_MAX_VOLTAGE);
         motor.burnFlash();
     }
 
-    public void setSpeed(double speed1, double speed2) {
-        extMotor.set(speed1);
-        midMotor.set(speed2);
+    public void setSpeed() {
+        extMotor.set(EXT_INDEXER_SPEED);
+        midMotor.set(MID_INDEXER_SPEED);
     }
 
     public void stopIndexing() {
-        this.setSpeed(0, 0);
+        extMotor.set(0);
+        midMotor.set(0);
     }
 
     public int getBallCount() {

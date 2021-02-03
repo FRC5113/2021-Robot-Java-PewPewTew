@@ -7,8 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.DriveCommand;
@@ -35,6 +35,8 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    I2C gyro = new I2C(I2C.Port.kOnboard, 254);
+    
   }
 
   /**
