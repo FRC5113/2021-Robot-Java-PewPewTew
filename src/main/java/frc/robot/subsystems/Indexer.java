@@ -42,6 +42,7 @@ public class Indexer extends SubsystemBase {
         motor.setIdleMode(IdleMode.kBrake);
         motor.setSmartCurrentLimit(INDEXER_MAX_CURRENT);
         motor.enableVoltageCompensation(INDEXER_MAX_VOLTAGE);
+        motor.setInverted(true);
         motor.burnFlash();
     }
 

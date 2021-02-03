@@ -76,8 +76,8 @@ public final class Constants {
 
         public static final int INDEXER_MAX_CURRENT = 40;
         public static final double INDEXER_MAX_VOLTAGE = 12.3;
-        public static final double EXT_INDEXER_SPEED = 0.75;
-        public static final double MID_INDEXER_SPEED = 0.75;
+        public static final double EXT_INDEXER_SPEED = 0.5;
+        public static final double MID_INDEXER_SPEED = 0.2;
     
     }
 

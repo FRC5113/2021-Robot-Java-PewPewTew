@@ -7,7 +7,7 @@
 
 package frc.robot;
 
-import static frc.robot.Constants.JoystickConstants.xboxLeftBumper;
+import static frc.robot.Constants.JoystickConstants.*;
 
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -19,9 +19,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.CenterTargetRobot;
+import frc.robot.commands.IndexCommand;
 import frc.robot.commands.ShootCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.HopUp;
+import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
@@ -40,6 +42,7 @@ public class RobotContainer {
    */
   //private Compressor compressor = new Compressor();
   public DriveTrain driveTrain = new DriveTrain();
+  public Indexer indexer = new Indexer();
   public Limelight limelight = new Limelight();
   public HopUp hopper = new HopUp();
   public Shooter shooter = new Shooter();
@@ -64,6 +67,9 @@ public class RobotContainer {
     new JoystickButton(driveController, xboxLeftBumper)
         .whenPressed(() -> driveTrain.setMaxOutput(0.5))
         .whenReleased(() -> driveTrain.setMaxOutput(1));
+
+    new JoystickButton(driveController, xboxAButton)
+        .whileHeld(new IndexCommand(indexer, hopper), false);
 
     new Trigger(() -> (driveController.getTriggerAxis(Hand.kRight) > 0.75))
         .whileActiveContinuous(new ShootCommand(shooter, hopper, 6000));
