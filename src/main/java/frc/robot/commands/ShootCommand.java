@@ -1,33 +1,16 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.HopUp;
+import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Shooter;
 
-public class ShootCommand extends CommandBase {
+public class ShootCommand extends ParallelCommandGroup{
 
-    private double speed;
-
-    private final Shooter shooter;
-    private final HopUp hopper;
-
-    public ShootCommand(Shooter shooter, HopUp hopper, double speed) {
-        addRequirements(shooter, hopper);
-        this.shooter = shooter;
-        this.hopper = hopper;
-        this.speed = speed;
+    public ShootCommand(Shooter shooter, HopUp hopper, Indexer indexer, double speed) {
+        super(new SpinUpCommand(shooter,hopper, speed), new SequentialCommandGroup(new WaitCommand(2)), new FeedToShooterCommand(hopper, indexer, speed));
     }
-
-    @Override
-    public void execute() {
-        shooter.setSpeed(speed);
-        hopper.setSpeed();
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-        shooter.coast();
-        hopper.stopHopping();
-    }
-
+    
 }

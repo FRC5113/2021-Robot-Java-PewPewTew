@@ -7,19 +7,26 @@ import frc.robot.subsystems.Indexer;
 
 public class IndexCommand extends CommandBase {
 
-    Indexer indexer;
-    HopUp hopper;
+    private final Indexer indexer;
+    private boolean reverse;
 
-    public IndexCommand(Indexer indexer, HopUp hopper) {
-        addRequirements(indexer, hopper);
+    public IndexCommand(Indexer indexer) {
+        addRequirements(indexer);
         this.indexer = indexer;
-        this.hopper = hopper;
+        this.reverse = false;
+
+    }
+
+    public IndexCommand(Indexer indexer, boolean reverse) {
+        addRequirements(indexer);
+        this.indexer = indexer;
+        this.reverse = reverse;
 
     }
 
     @Override
     public void execute() {
-        indexer.setSpeed();
+        indexer.setSpeed(reverse);
     }
 
     @Override

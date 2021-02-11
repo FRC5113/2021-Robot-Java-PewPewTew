@@ -46,9 +46,14 @@ public class Indexer extends SubsystemBase {
         motor.burnFlash();
     }
 
-    public void setSpeed() {
-        extMotor.set(EXT_INDEXER_SPEED);
-        midMotor.set(MID_INDEXER_SPEED);
+    public void setSpeed(boolean reverse) {
+        if (reverse) {
+            extMotor.set(-EXT_INDEXER_SPEED);
+            midMotor.set(-MID_INDEXER_SPEED);
+        } else {
+            extMotor.set(EXT_INDEXER_SPEED);
+            midMotor.set(MID_INDEXER_SPEED);
+        }
     }
 
     public void stopIndexing() {

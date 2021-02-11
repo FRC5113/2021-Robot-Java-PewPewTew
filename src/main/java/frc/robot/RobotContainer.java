@@ -19,8 +19,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.CenterTargetRobot;
+import frc.robot.commands.HopperMove;
 import frc.robot.commands.IndexCommand;
 import frc.robot.commands.ShootCommand;
+import frc.robot.commands.SpinUpCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.HopUp;
 import frc.robot.subsystems.Indexer;
@@ -69,13 +71,19 @@ public class RobotContainer {
         .whenReleased(() -> driveTrain.setMaxOutput(1));
 
     new JoystickButton(driveController, xboxAButton)
-        .whileHeld(new IndexCommand(indexer, hopper), false);
+        .whileHeld(new IndexCommand(indexer), false);
+    
+    new JoystickButton(driveController, xboxBButton)
+        .whileHeld(new IndexCommand(indexer, true), false);
 
     new Trigger(() -> (driveController.getTriggerAxis(Hand.kRight) > 0.75))
-        .whileActiveContinuous(new ShootCommand(shooter, hopper, 6000));
+        .whileActiveContinuous(new SpinUpCommand(shooter, hopper, 6000));
         
     new Trigger(() -> (driveController.getTriggerAxis(Hand.kLeft) > 0.75))
-        .whileActiveContinuous(new CenterTargetRobot(driveTrain, limelight));
+        .whileActiveContinuous(new HopperMove(hopper));
+    
+    //new Trigger(() -> (driveController.getTriggerAxis(Hand.kLeft) > 0.75))
+    //    .whileActiveContinuous(new CenterTargetRobot(driveTrain, limelight));
   }
 
   public double getDriveLeftVal() {
