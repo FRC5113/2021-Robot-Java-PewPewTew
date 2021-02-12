@@ -14,6 +14,7 @@ public class Shooter extends SubsystemBase {
 
     private WPI_TalonFX shooterChild;
     private WPI_TalonFX shooterParent;
+    private int pulseTime;
 
     public Shooter() {
         shooterParent = new WPI_TalonFX(SHOOTER_PARENT_ID);
@@ -29,6 +30,7 @@ public class Shooter extends SubsystemBase {
 
         shooterParent.setInverted(false);
         shooterChild.setInverted(true);
+
 
     }
 
@@ -57,6 +59,10 @@ public class Shooter extends SubsystemBase {
 
     public void getCurrent() {
         SmartDashboard.putNumber("Current", shooterParent.getSupplyCurrent());
+    }
+
+    public int getPulseTime() {
+        return this.pulseTime;
     }
 
 }

@@ -4,8 +4,11 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.DriveTrainConstants.*;
@@ -17,6 +20,8 @@ public class DriveTrain extends SubsystemBase {
     private final WPI_TalonFX leftChild;
     private final WPI_TalonFX rightChild;
     private final DifferentialDrive driveBase;
+
+    private final AHRS gyro;
 
     public DriveTrain() {
         leftParent = new WPI_TalonFX(LEFT_PARENT_ID);
@@ -33,6 +38,10 @@ public class DriveTrain extends SubsystemBase {
 
         driveBase = new DifferentialDrive(leftParent, rightParent);
         driveBase.setDeadband(DEADBAND);
+
+        gyro = new AHRS(SPI.Port.kMXP);
+        gyro.enableLogging(true);
+        
     }
 
     private void configureMotor(WPI_TalonFX motor, boolean left) {
@@ -100,6 +109,14 @@ public class DriveTrain extends SubsystemBase {
         rightParent.setNeutralMode(NeutralMode.Brake);
         leftChild.setNeutralMode(NeutralMode.Brake);
         rightChild.setNeutralMode(NeutralMode.Brake);
+    }
+
+    public double getAngle() {
+        return gyro.getYaw();
+    }
+
+    public void showAngle() {
+        SmartDashboard.putNumber("Angle", gyro.getAngle());
     }
 
 }

@@ -120,6 +120,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     m_robotContainer.shooter.getSpeed();
     m_robotContainer.shooter.getCurrent();
+    m_robotContainer.driveTrain.showAngle();
   }
 
   @Override

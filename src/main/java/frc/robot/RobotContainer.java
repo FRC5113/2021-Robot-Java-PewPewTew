@@ -78,6 +78,9 @@ public class RobotContainer {
 
     new Trigger(() -> (driveController.getTriggerAxis(Hand.kRight) > 0.75))
         .whileActiveContinuous(new SpinUpCommand(shooter, hopper, 6000));
+    
+    //new Trigger(() -> (driveController.getTriggerAxis(Hand.kRight) < 0.25))
+    //    .whileActiveContinuous(null);
         
     new Trigger(() -> (driveController.getTriggerAxis(Hand.kLeft) > 0.75))
         .whileActiveContinuous(new HopperMove(hopper));
