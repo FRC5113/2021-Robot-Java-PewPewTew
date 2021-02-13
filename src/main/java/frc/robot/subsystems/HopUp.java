@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class HopUp extends SubsystemBase {
@@ -28,7 +29,8 @@ public class HopUp extends SubsystemBase {
     }
 
     public void setSpeed() {
-        hopper.set(0.7);
+        hopper.set(0.8);
+        SmartDashboard.putNumber("hopperCurrent", hopper.getOutputCurrent());
     }
 
     public void stopHopping() {

@@ -1,5 +1,14 @@
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.DriveTrainConstants.CONVERSION_RATE;
+import static frc.robot.Constants.DriveTrainConstants.DEADBAND;
+import static frc.robot.Constants.DriveTrainConstants.DRIVE_MAX_VOLTAGE;
+import static frc.robot.Constants.DriveTrainConstants.LEFT_CHILD_ID;
+import static frc.robot.Constants.DriveTrainConstants.LEFT_PARENT_ID;
+import static frc.robot.Constants.DriveTrainConstants.RAMP_RATE;
+import static frc.robot.Constants.DriveTrainConstants.RIGHT_CHILD_ID;
+import static frc.robot.Constants.DriveTrainConstants.RIGHT_PARENT_ID;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -8,10 +17,11 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import static frc.robot.Constants.DriveTrainConstants.*;
 
 public class DriveTrain extends SubsystemBase {
 
@@ -22,6 +32,7 @@ public class DriveTrain extends SubsystemBase {
     private final DifferentialDrive driveBase;
 
     private final AHRS gyro;
+    private final DifferentialDriveOdometry odometry;
 
     public DriveTrain() {
         leftParent = new WPI_TalonFX(LEFT_PARENT_ID);
@@ -41,18 +52,20 @@ public class DriveTrain extends SubsystemBase {
 
         gyro = new AHRS(SPI.Port.kMXP);
         gyro.enableLogging(true);
+
+        odometry = new DifferentialDriveOdometry(gyro.getRotation2d());
         
     }
 
     private void configureMotor(WPI_TalonFX motor, boolean left) {
         motor.configFactoryDefault(); // Resetting the motors to make sure there's no junk on there before configuring
-        motor.configVoltageCompSaturation(DRIVE_MAX_VOLTAGE); // only use 12.3 volts regardless of battery voltage
-        motor.enableVoltageCompensation(true); // enable ^
+        //motor.configVoltageCompSaturation(DRIVE_MAX_VOLTAGE); // only use 12.3 volts regardless of battery voltage
+        //motor.enableVoltageCompensation(true); // enable ^
         motor.setNeutralMode(NeutralMode.Brake); // set it so that when the motor is getting no input, it stops
         motor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor); // configure the encoder (it's inside)
         motor.setSelectedSensorPosition(0); // reset the encoder to have a value of 0
         motor.configOpenloopRamp(RAMP_RATE); // how long it takes to go from 0 to the set speed
-        motor.setSensorPhase(left);
+        motor.setSensorPhase(true);
         // Make sure that both sides' encoders are getting positive values when going
         // forward
     }
@@ -66,6 +79,7 @@ public class DriveTrain extends SubsystemBase {
         // Tank drive, but in the case we want to use volts, it's here
         leftParent.setVoltage(DRIVE_MAX_VOLTAGE * leftSpeed);
         rightParent.setVoltage(DRIVE_MAX_VOLTAGE * rightSpeed);
+        driveBase.feed();
     }
 
     public void arcadeDrive(double speed, double rotation) {
@@ -111,12 +125,44 @@ public class DriveTrain extends SubsystemBase {
         rightChild.setNeutralMode(NeutralMode.Brake);
     }
 
+    public void resetEncoders() {
+        leftParent.setSelectedSensorPosition(0);
+        rightParent.setSelectedSensorPosition(0);
+    }
+
+    public void resetOdometry(Pose2d pose) {
+        resetEncoders();
+        odometry.resetPosition(pose, gyro.getRotation2d());
+      }
+
+    public void periodic() {
+        // Update the odometry in the periodic block
+        odometry.update(gyro.getRotation2d(), 
+                        leftParent.getSelectedSensorPosition()*CONVERSION_RATE,
+                        rightParent.getSelectedSensorPosition()*-CONVERSION_RATE);
+    }
+
+    public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+        return new DifferentialDriveWheelSpeeds
+            (leftParent.getSelectedSensorVelocity()*CONVERSION_RATE, 
+            rightParent.getSelectedSensorVelocity()*-CONVERSION_RATE);
+      }
+
     public double getAngle() {
-        return gyro.getYaw();
+        return gyro.getRotation2d().getDegrees();
+    }
+
+    public Pose2d getPose() {
+        return odometry.getPoseMeters();
     }
 
     public void showAngle() {
         SmartDashboard.putNumber("Angle", gyro.getAngle());
+    }
+
+    public void putSpeed() {
+        SmartDashboard.putNumber("LeftSpeed", leftParent.getSelectedSensorVelocity()*CONVERSION_RATE);
+        SmartDashboard.putNumber("RightSpeed", rightParent.getSelectedSensorVelocity()*-CONVERSION_RATE);
     }
 
 }

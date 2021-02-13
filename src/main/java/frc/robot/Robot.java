@@ -66,7 +66,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    m_robotContainer.driveTrain.setAllToCoast();
+    //m_robotContainer.driveTrain.setAllToCoast();
   }
 
   @Override
@@ -112,8 +112,8 @@ public class Robot extends TimedRobot {
         () -> m_robotContainer.getControllerLeftY(),
         () -> m_robotContainer.getControllerRightX()));
     
-        m_robotContainer.shooter.setDefaultCommand(
-        new ShooterPulseCommand(m_robotContainer.shooter, 2500));
+    //m_robotContainer.shooter.setDefaultCommand(
+    //    new ShooterPulseCommand(m_robotContainer.shooter, 2500));
   }
 
   /**
@@ -122,9 +122,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     m_robotContainer.shooter.getSpeed();
-    m_robotContainer.shooter.getCurrent();
+    m_robotContainer.shooter.getCurrent();   
+    m_robotContainer.driveTrain.putSpeed();
     m_robotContainer.driveTrain.showAngle();
-    
   }
 
   @Override

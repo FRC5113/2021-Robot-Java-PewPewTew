@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.util.Units;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -33,6 +36,27 @@ public final class Constants {
 
     }
 
+    public final static class PathweaverConstants {
+
+        public static final double ksVolts = 0.723;
+        public static final double kvVoltSecondsPerMeter = 0.349;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.309;
+
+        public static final double kPDriveVel = 1.83;
+
+        public static final double kTrackwidthMeters = 0.66;
+        public static final DifferentialDriveKinematics kDriveKinematics =
+            new DifferentialDriveKinematics(kTrackwidthMeters);
+
+        public static final double kMaxSpeedMetersPerSecond = 2;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 1;
+
+        // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
+        public static final double kRamseteB = 2;
+        public static final double kRamseteZeta = 0.7;
+
+    }
+
     public final static class LimelightConstants {
 
         public static final double ANGLE = 25.0;
@@ -53,6 +77,9 @@ public final class Constants {
         public static final double DRIVE_MAX_VOLTAGE = 12.3;
         public static final double RAMP_RATE = 0.6;
         public static final double DEADBAND = 0.1;
+
+        public static final double CONVERSION_RATE = 
+            8.125*Units.inchesToMeters(6)*Math.PI/2048/100;
 
     }
 
