@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.ShooterPulseCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -110,7 +111,9 @@ public class Robot extends TimedRobot {
         new DriveCommand(m_robotContainer.driveTrain,
         () -> m_robotContainer.getControllerLeftY(),
         () -> m_robotContainer.getControllerRightX()));
-
+    
+        m_robotContainer.shooter.setDefaultCommand(
+        new ShooterPulseCommand(m_robotContainer.shooter, 2500));
   }
 
   /**
@@ -121,6 +124,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.shooter.getSpeed();
     m_robotContainer.shooter.getCurrent();
     m_robotContainer.driveTrain.showAngle();
+    
   }
 
   @Override

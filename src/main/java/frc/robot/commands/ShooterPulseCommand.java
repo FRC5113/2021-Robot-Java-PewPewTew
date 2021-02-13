@@ -16,12 +16,13 @@ public class ShooterPulseCommand extends CommandBase{
 
     @Override
     public void execute() {
-        shooter.setSpeed(speed);
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-        shooter.coast();
+        if ((shooter.getPulseTime()/500)%20<=6) {
+            if (shooter.getSpeed() > speed+500)
+                shooter.coast();
+            else
+                shooter.setSpeed(speed);
+        } else
+            shooter.coast();
     }
 
 }

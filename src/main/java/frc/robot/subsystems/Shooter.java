@@ -14,7 +14,8 @@ public class Shooter extends SubsystemBase {
 
     private WPI_TalonFX shooterChild;
     private WPI_TalonFX shooterParent;
-    private int pulseTime;
+    private double pulseTime;
+    private double startTime;
 
     public Shooter() {
         shooterParent = new WPI_TalonFX(SHOOTER_PARENT_ID);
@@ -30,6 +31,8 @@ public class Shooter extends SubsystemBase {
 
         shooterParent.setInverted(false);
         shooterChild.setInverted(true);
+
+        startTime = System.currentTimeMillis();
 
 
     }
@@ -53,15 +56,18 @@ public class Shooter extends SubsystemBase {
         shooterParent.set(0);
     }
 
-    public void getSpeed() {
+    public double getSpeed() {
         SmartDashboard.putNumber("Velocity", shooterParent.getSelectedSensorVelocity()*CONVERSION_RATE);
+        return shooterParent.getSelectedSensorVelocity()*CONVERSION_RATE;
     }
 
     public void getCurrent() {
         SmartDashboard.putNumber("Current", shooterParent.getSupplyCurrent());
     }
 
-    public int getPulseTime() {
+    public double getPulseTime() {
+        this.pulseTime = System.currentTimeMillis() - this.startTime;
+        System.out.println((this.pulseTime/500)%10);
         return this.pulseTime;
     }
 
