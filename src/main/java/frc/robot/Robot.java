@@ -36,7 +36,6 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    I2C gyro = new I2C(I2C.Port.kOnboard, 254);
     
   }
 
@@ -93,6 +92,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    m_robotContainer.driveTrain.getPose();
   }
 
   @Override
@@ -125,6 +125,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.shooter.getCurrent();   
     m_robotContainer.driveTrain.putSpeed();
     m_robotContainer.driveTrain.showAngle();
+    m_robotContainer.driveTrain.getPose();
   }
 
   @Override

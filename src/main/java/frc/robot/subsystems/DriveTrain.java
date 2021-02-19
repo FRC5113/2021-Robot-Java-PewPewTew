@@ -49,6 +49,7 @@ public class DriveTrain extends SubsystemBase {
 
         driveBase = new DifferentialDrive(leftParent, rightParent);
         driveBase.setDeadband(DEADBAND);
+        driveBase.setSafetyEnabled(false);
 
         gyro = new AHRS(SPI.Port.kMXP);
         gyro.enableLogging(true);

@@ -57,6 +57,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public double getSpeed() {
+        System.out.println("Velocity: " + (shooterParent.getSelectedSensorVelocity()*CONVERSION_RATE));
         SmartDashboard.putNumber("Velocity", shooterParent.getSelectedSensorVelocity()*CONVERSION_RATE);
         return shooterParent.getSelectedSensorVelocity()*CONVERSION_RATE;
     }

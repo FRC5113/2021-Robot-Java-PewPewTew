@@ -89,7 +89,7 @@ public class RobotContainer {
         .whileHeld(new IndexCommand(indexer, true), false);
 
     new Trigger(() -> (driveController.getTriggerAxis(Hand.kRight) > 0.75))
-        .whileActiveContinuous(new SpinUpCommand(shooter, hopper, 6000));
+        .whileActiveContinuous(new SpinUpCommand(shooter, hopper, 3250));
         
     new Trigger(() -> (driveController.getTriggerAxis(Hand.kLeft) > 0.75))
         .whileActiveContinuous(new HopperMove(hopper));
@@ -173,6 +173,7 @@ public class RobotContainer {
     // Reset odometry to the starting pose of the trajectory.
     driveTrain.resetOdometry(exampleTrajectory.getInitialPose());
 
+    
     // Run path following command, then stop at the end.
     return ramseteCommand.andThen(() -> driveTrain.tankDriveVolts(0, 0));
   }
