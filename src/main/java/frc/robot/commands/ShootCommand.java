@@ -10,7 +10,7 @@ import frc.robot.subsystems.Shooter;
 public class ShootCommand extends ParallelCommandGroup{
 
     public ShootCommand(Shooter shooter, HopUp hopper, Indexer indexer, double speed) {
-        super(new SpinUpCommand(shooter,hopper, speed), new SequentialCommandGroup(new WaitCommand(2)), new FeedToShooterCommand(hopper, indexer, speed));
+        super(new SpinUpCommand(shooter,hopper, speed), new SequentialCommandGroup(new WaitCommand(5), new FeedToShooterCommand(hopper, indexer, speed)));
     }
     
 }

@@ -38,18 +38,18 @@ public final class Constants {
 
     public final static class PathweaverConstants {
 
-        public static final double ksVolts = 0.225;
-        public static final double kvVoltSecondsPerMeter = 0.215;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.0232;
+        public static final double ksVolts = 0.665;
+        public static final double kvVoltSecondsPerMeter = 0.584;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.0405;
 
-        public static final double kPDriveVel = 0.986;
+        public static final double kPDriveVel = 1.74;
 
-        public static final double kTrackwidthMeters = 0.2;
+        public static final double kTrackwidthMeters = 0.66;
         public static final DifferentialDriveKinematics kDriveKinematics =
             new DifferentialDriveKinematics(kTrackwidthMeters);
 
-        public static final double kMaxSpeedMetersPerSecond = 0.005;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 0.002;
+        public static final double kMaxSpeedMetersPerSecond = 3;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 2;
 
         // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
         public static final double kRamseteB = 2;
@@ -104,7 +104,7 @@ public final class Constants {
         public static final int INDEXER_MAX_CURRENT = 40;
         public static final double INDEXER_MAX_VOLTAGE = 12.3;
         public static final double EXT_INDEXER_SPEED = 0.8;
-        public static final double MID_INDEXER_SPEED = 0.8;
+        public static final double MID_INDEXER_SPEED = 0.4;
     
     }
 
@@ -122,14 +122,23 @@ public final class Constants {
         public static final int SHOOTER_PARENT_ID = 42;
         public static final int SHOOTER_CHILD_ID = 41;
         public static final double MAX_VOLTAGE = 12.0;
-        public static final double RAMP_RATE = 3.0;
+        public static final double RAMP_RATE = 5;
 
         public static final double CONVERSION_RATE = 600.0 / 2048;
 
-        public static final double kP = 1;
-        public static final double kI = 0.000022;
-        public static final double kD = 5;
+        public static final double kP = 7;
+        public static final double kI = 0.00;
+        public static final double kD = 500;
+
+        public static final double feet17halffront = 3200;
+        public static final double feet12halffront = 2800; 
+        public static final double feet7halffront = 2700;
+        public static final double feet7halfback = 5100;
 
     }
 
+    public final static class LEDConstants {
+        public static final int LED_PORT = 9;
+        public static final int LED_LENGTH = 60;
+    }
 }

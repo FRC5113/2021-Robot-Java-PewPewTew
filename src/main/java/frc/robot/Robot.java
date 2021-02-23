@@ -65,7 +65,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    //m_robotContainer.driveTrain.setAllToCoast();
+    m_robotContainer.driveTrain.setAllToCoast();
   }
 
   @Override
@@ -79,7 +79,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    m_robotContainer.driveTrain.setAllToBrake();
+    //m_robotContainer.driveTrain.setAllToBrake();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -126,6 +126,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.driveTrain.putSpeed();
     m_robotContainer.driveTrain.showAngle();
     m_robotContainer.driveTrain.getPose();
+    //m_robotContainer.led.rainbow();
   }
 
   @Override

@@ -21,7 +21,7 @@
     # For the CTRE Mag Encoder, use 16384 (4 * 4096 = 16384)
     "encoderEPR": 2048,
     # Gearing accounts for the gearing between the encoder and the output shaft
-    "gearing": 11.5,
+    "gearing": 1,
     # Encoder ports (leave empty "[]" if not needed)
     # Specifying encoder ports indicates you want to use Rio-side encoders
     # If doing drive test, treat this as the left side of the drivetrain
@@ -32,7 +32,7 @@
     # If doing drive test, treat this as the left side of the drivetrain
     "encoderInverted": False,
     # Only if you are doing drive (set to False if not needed)
-    "rightEncoderInverted": True,
+    "rightEncoderInverted": False,
     # ** The following is only if you are using a gyro for the DriveTrain test**
     # Gyro type (one of "NavX", "Pigeon", "ADXRS450", "AnalogGyro", or "None")
     "gyroType": "NavX",
@@ -46,6 +46,8 @@
     # "" (NavX using default SPI, ADXRS450 using onboard CS0, or no gyro)
     "gyroPort": "SPI.Port.kMXP",
 }
+
+
 
 
 

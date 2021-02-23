@@ -38,8 +38,11 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.HopUp;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.LED;
 import frc.robot.subsystems.Shooter;
 import static frc.robot.Constants.PathweaverConstants.*;
+import static frc.robot.Constants.ShooterConstants.*;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -60,6 +63,7 @@ public class RobotContainer {
   public Limelight limelight = new Limelight();
   public HopUp hopper = new HopUp();
   public Shooter shooter = new Shooter();
+  //public LED led = new LED();
 
   private Joystick leftDriveJoystick = new Joystick(0);
   private Joystick rightDriveJoystick = new Joystick(1);
@@ -89,7 +93,7 @@ public class RobotContainer {
         .whileHeld(new IndexCommand(indexer, true), false);
 
     new Trigger(() -> (driveController.getTriggerAxis(Hand.kRight) > 0.75))
-        .whileActiveContinuous(new SpinUpCommand(shooter, hopper, 3250));
+        .whileActiveContinuous(new SpinUpCommand(shooter, hopper, feet7halfback));
         
     new Trigger(() -> (driveController.getTriggerAxis(Hand.kLeft) > 0.75))
         .whileActiveContinuous(new HopperMove(hopper));
