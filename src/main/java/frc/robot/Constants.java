@@ -38,18 +38,18 @@ public final class Constants {
 
     public final static class PathweaverConstants {
 
-        public static final double ksVolts = 0.665;
-        public static final double kvVoltSecondsPerMeter = 0.584;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.0405;
+        public static final double ksVolts = 0.012;
+        public static final double kvVoltSecondsPerMeter = 0.43;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.154;
 
-        public static final double kPDriveVel = 1.74;
+        public static final double kPDriveVel = 0.000603;
 
-        public static final double kTrackwidthMeters = 0.66;
+        public static final double kTrackwidthMeters = 0.6720082224258779;
         public static final DifferentialDriveKinematics kDriveKinematics =
             new DifferentialDriveKinematics(kTrackwidthMeters);
 
-        public static final double kMaxSpeedMetersPerSecond = 3;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 2;
+        public static final double kMaxSpeedMetersPerSecond = 1.5;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 0.5;
 
         // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
         public static final double kRamseteB = 2;
@@ -74,7 +74,7 @@ public final class Constants {
         public static final int LEFT_CHILD_ID = 21;
         public static final int RIGHT_CHILD_ID = 22;
 
-        public static final double DRIVE_MAX_VOLTAGE = 12.3;
+        public static final double DRIVE_MAX_VOLTAGE = 12.0;
         public static final double RAMP_RATE = 0.6;
         public static final double DEADBAND = 0.1;
 
@@ -127,13 +127,15 @@ public final class Constants {
         public static final double CONVERSION_RATE = 600.0 / 2048;
 
         public static final double kP = 7;
-        public static final double kI = 0.00;
+        public static final double kI = 0.000001;
         public static final double kD = 500;
 
         public static final double feet17halffront = 3200;
         public static final double feet12halffront = 2800; 
         public static final double feet7halffront = 2700;
         public static final double feet7halfback = 5100;
+
+        public static final double testVal = 3000;
 
     }
 

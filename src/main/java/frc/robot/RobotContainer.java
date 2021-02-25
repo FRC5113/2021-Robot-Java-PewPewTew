@@ -93,7 +93,7 @@ public class RobotContainer {
         .whileHeld(new IndexCommand(indexer, true), false);
 
     new Trigger(() -> (driveController.getTriggerAxis(Hand.kRight) > 0.75))
-        .whileActiveContinuous(new SpinUpCommand(shooter, hopper, feet7halfback));
+        .whileActiveContinuous(new SpinUpCommand(shooter, hopper, testVal));
         
     new Trigger(() -> (driveController.getTriggerAxis(Hand.kLeft) > 0.75))
         .whileActiveContinuous(new HopperMove(hopper));
@@ -143,6 +143,7 @@ public class RobotContainer {
             // Apply the voltage constraint
             .addConstraint(autoVoltageConstraint);
 
+    config.setReversed(false);
     // An example trajectory to follow.  All units in meters.
     Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
         // Start at the origin facing the +X direction

@@ -113,7 +113,7 @@ public class Robot extends TimedRobot {
         () -> m_robotContainer.getControllerRightX()));
     
     //m_robotContainer.shooter.setDefaultCommand(
-    //    new ShooterPulseCommand(m_robotContainer.shooter, 2500));
+    //    new ShooterPulseCommand(m_robotContainer.shooter, 2000));
   }
 
   /**

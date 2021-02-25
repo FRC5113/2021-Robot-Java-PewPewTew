@@ -15,6 +15,8 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -34,6 +36,10 @@ public class DriveTrain extends SubsystemBase {
     private final AHRS gyro;
     private final DifferentialDriveOdometry odometry;
 
+    private NetworkTableEntry m_xEntry = NetworkTableInstance.getDefault().getTable("troubleshooting").getEntry("X");
+    private NetworkTableEntry m_yEntry = NetworkTableInstance.getDefault().getTable("troubleshooting").getEntry("Y");
+
+
     public DriveTrain() {
         leftParent = new WPI_TalonFX(LEFT_PARENT_ID);
         rightParent = new WPI_TalonFX(RIGHT_PARENT_ID);
@@ -43,6 +49,7 @@ public class DriveTrain extends SubsystemBase {
         configureMotor(rightParent, false);
         configureMotor(leftChild, true);
         configureMotor(rightChild, false);
+
 
         rightChild.set(ControlMode.Follower, rightParent.getDeviceID());
         leftChild.set(ControlMode.Follower, leftParent.getDeviceID());
@@ -79,7 +86,7 @@ public class DriveTrain extends SubsystemBase {
     public void tankDriveVolts(double leftSpeed, double rightSpeed) {
         // Tank drive, but in the case we want to use volts, it's here
         leftParent.setVoltage(DRIVE_MAX_VOLTAGE * leftSpeed);
-        rightParent.setVoltage(DRIVE_MAX_VOLTAGE * rightSpeed);
+        rightParent.setVoltage(-DRIVE_MAX_VOLTAGE * rightSpeed);
         driveBase.feed();
     }
 
@@ -128,7 +135,9 @@ public class DriveTrain extends SubsystemBase {
 
     public void resetEncoders() {
         leftParent.setSelectedSensorPosition(0);
+        leftChild.setSelectedSensorPosition(0);
         rightParent.setSelectedSensorPosition(0);
+        rightChild.setSelectedSensorPosition(0);
     }
 
     public void resetOdometry(Pose2d pose) {
@@ -141,6 +150,13 @@ public class DriveTrain extends SubsystemBase {
         odometry.update(gyro.getRotation2d(), 
                         leftParent.getSelectedSensorPosition()*CONVERSION_RATE,
                         rightParent.getSelectedSensorPosition()*-CONVERSION_RATE);
+        
+        var translation = odometry.getPoseMeters().getTranslation();
+        m_xEntry.setNumber(translation.getX());
+        m_yEntry.setNumber(translation.getY());
+        SmartDashboard.putNumber("XVal", m_xEntry.getNumber(69).doubleValue()*CONVERSION_RATE);
+        SmartDashboard.putNumber("YVal", m_yEntry.getNumber(54).doubleValue()*CONVERSION_RATE);
+
     }
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
