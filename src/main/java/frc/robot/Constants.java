@@ -38,11 +38,11 @@ public final class Constants {
 
     public final static class PathweaverConstants {
 
-        public static final double ksVolts = 0.012;
-        public static final double kvVoltSecondsPerMeter = 0.43;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.154;
+        public static final double ksVolts = 0.01;
+        public static final double kvVoltSecondsPerMeter = 0.07;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.0427;
 
-        public static final double kPDriveVel = 0.000603;
+        public static final double kPDriveVel = 1;
 
         public static final double kTrackwidthMeters = 0.6720082224258779;
         public static final DifferentialDriveKinematics kDriveKinematics =
@@ -78,8 +78,14 @@ public final class Constants {
         public static final double RAMP_RATE = 0.6;
         public static final double DEADBAND = 0.1;
 
-        public static final double CONVERSION_RATE = 
-            8.125*Units.inchesToMeters(6)*Math.PI/2048/100;
+        public static final double CONVERSTIONRATETEST = 
+        1/2048/11.5*Units.inchesToMeters(6.5)*Math.PI;
+
+        public static final double CONVERSION_RATE_VELOCITY = 
+            Units.inchesToMeters(6.0)*Math.PI/2048/10/11.5;
+
+        public static final double CONVERSION_RATE_POSITION =
+            Units.inchesToMeters(6.0)*Math.PI/2048/11.5;
 
     }
 

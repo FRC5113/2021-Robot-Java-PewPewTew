@@ -11,8 +11,13 @@ import static frc.robot.Constants.JoystickConstants.xboxAButton;
 import static frc.robot.Constants.JoystickConstants.xboxBButton;
 import static frc.robot.Constants.JoystickConstants.xboxLeftBumper;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
@@ -26,6 +31,7 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -93,7 +99,7 @@ public class RobotContainer {
         .whileHeld(new IndexCommand(indexer, true), false);
 
     new Trigger(() -> (driveController.getTriggerAxis(Hand.kRight) > 0.75))
-        .whileActiveContinuous(new SpinUpCommand(shooter, hopper, testVal));
+        .whileActiveContinuous(new SpinUpCommand(shooter, hopper, feet17halffront));
         
     new Trigger(() -> (driveController.getTriggerAxis(Hand.kLeft) > 0.75))
         .whileActiveContinuous(new HopperMove(hopper));
@@ -118,6 +124,11 @@ public class RobotContainer {
     return driveController.getX(Hand.kRight);
   }
 
+  public Command getAutoCommand() {
+    return null;
+  }
+
+  
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -125,6 +136,63 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    String trajectoryJSON = "output/Barrel.wpilib.json";
+    
+    Trajectory trajectory = null;
+    try {
+      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    } catch (IOException ex) {
+      DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+    }
+
+    
+
+    var autoVoltageConstraint =
+        new DifferentialDriveVoltageConstraint(
+            new SimpleMotorFeedforward(ksVolts,
+                                       kvVoltSecondsPerMeter,
+                                       kaVoltSecondsSquaredPerMeter),
+            kDriveKinematics,
+            10);
+
+    // Create config for trajectory
+    TrajectoryConfig config =
+        new TrajectoryConfig(kMaxSpeedMetersPerSecond,
+                             kMaxAccelerationMetersPerSecondSquared)
+            // Add kinematics to ensure max speed is actually obeyed
+            .setKinematics(kDriveKinematics)
+            // Apply the voltage constraint
+            .addConstraint(autoVoltageConstraint);
+
+    config.setReversed(false);
+    // An example trajectory to follow. All units in meters.
+    Trajectory exampleTrajectory = trajectory;
+
+    RamseteCommand ramseteCommand = new RamseteCommand(
+        exampleTrajectory,
+        driveTrain::getPose,
+        new RamseteController(kRamseteB, kRamseteZeta),
+        new SimpleMotorFeedforward(ksVolts,
+                                   kvVoltSecondsPerMeter,
+                                   kaVoltSecondsSquaredPerMeter),
+        kDriveKinematics,
+        driveTrain::getWheelSpeeds,
+        new PIDController(kPDriveVel, 0, 0),
+        new PIDController(kPDriveVel, 0, 0),
+        // RamseteCommand passes volts to the callback
+        driveTrain::tankDriveVolts,
+        driveTrain
+    );
+
+    // Reset odometry to the starting pose of the trajectory.
+    driveTrain.resetOdometry(trajectory.getInitialPose());
+
+    
+    // Run path following command, then stop at the end.
+    return ramseteCommand.andThen(() -> driveTrain.tankDriveVolts(0, 0));
+    
+    /*
     // Create a voltage constraint to ensure we don't accelerate too fast
     var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
@@ -180,6 +248,6 @@ public class RobotContainer {
 
     
     // Run path following command, then stop at the end.
-    return ramseteCommand.andThen(() -> driveTrain.tankDriveVolts(0, 0));
+    return ramseteCommand.andThen(() -> driveTrain.tankDriveVolts(0, 0));*/
   }
 }

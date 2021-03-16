@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.DriveTrainConstants.CONVERSION_RATE;
+import static frc.robot.Constants.DriveTrainConstants.*;
 import static frc.robot.Constants.DriveTrainConstants.DEADBAND;
 import static frc.robot.Constants.DriveTrainConstants.DRIVE_MAX_VOLTAGE;
 import static frc.robot.Constants.DriveTrainConstants.LEFT_CHILD_ID;
@@ -18,6 +18,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
@@ -49,7 +50,6 @@ public class DriveTrain extends SubsystemBase {
         configureMotor(rightParent, false);
         configureMotor(leftChild, true);
         configureMotor(rightChild, false);
-
 
         rightChild.set(ControlMode.Follower, rightParent.getDeviceID());
         leftChild.set(ControlMode.Follower, leftParent.getDeviceID());
@@ -148,21 +148,18 @@ public class DriveTrain extends SubsystemBase {
     public void periodic() {
         // Update the odometry in the periodic block
         odometry.update(gyro.getRotation2d(), 
-                        leftParent.getSelectedSensorPosition()*CONVERSION_RATE,
-                        rightParent.getSelectedSensorPosition()*-CONVERSION_RATE);
+                        leftParent.getSelectedSensorPosition()*CONVERSION_RATE_POSITION,
+                        rightParent.getSelectedSensorPosition()*-CONVERSION_RATE_POSITION);
         
         var translation = odometry.getPoseMeters().getTranslation();
         m_xEntry.setNumber(translation.getX());
         m_yEntry.setNumber(translation.getY());
-        SmartDashboard.putNumber("XVal", m_xEntry.getNumber(69).doubleValue()*CONVERSION_RATE);
-        SmartDashboard.putNumber("YVal", m_yEntry.getNumber(54).doubleValue()*CONVERSION_RATE);
-
     }
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         return new DifferentialDriveWheelSpeeds
-            (leftParent.getSelectedSensorVelocity()*CONVERSION_RATE, 
-            rightParent.getSelectedSensorVelocity()*-CONVERSION_RATE);
+            (leftParent.getSelectedSensorVelocity()*CONVERSION_RATE_VELOCITY, 
+            rightParent.getSelectedSensorVelocity()*-CONVERSION_RATE_VELOCITY);
       }
 
     public double getAngle() {
@@ -178,8 +175,8 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public void putSpeed() {
-        SmartDashboard.putNumber("LeftSpeed", leftParent.getSelectedSensorVelocity()*CONVERSION_RATE);
-        SmartDashboard.putNumber("RightSpeed", rightParent.getSelectedSensorVelocity()*-CONVERSION_RATE);
+        SmartDashboard.putNumber("LeftSpeed", leftParent.getSelectedSensorVelocity()*CONVERSION_RATE_VELOCITY);
+        SmartDashboard.putNumber("RightSpeed", rightParent.getSelectedSensorVelocity()*-CONVERSION_RATE_VELOCITY);
     }
 
 }
