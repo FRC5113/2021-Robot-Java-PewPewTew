@@ -38,18 +38,18 @@ public final class Constants {
 
     public final static class PathweaverConstants {
 
-        public static final double ksVolts = 0.01;
-        public static final double kvVoltSecondsPerMeter = 0.07;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.0427;
+        public static final double ksVolts = 0.02;
+        public static final double kvVoltSecondsPerMeter = 0.13;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.04;
 
-        public static final double kPDriveVel = 1;
+        public static final double kPDriveVel = 0.09;
 
         public static final double kTrackwidthMeters = 0.6720082224258779;
         public static final DifferentialDriveKinematics kDriveKinematics =
             new DifferentialDriveKinematics(kTrackwidthMeters);
 
-        public static final double kMaxSpeedMetersPerSecond = 1.5;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 0.5;
+        public static final double kMaxSpeedMetersPerSecond = 2.0;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 2.0;
 
         // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
         public static final double kRamseteB = 2;
@@ -82,10 +82,10 @@ public final class Constants {
         1/2048/11.5*Units.inchesToMeters(6.5)*Math.PI;
 
         public static final double CONVERSION_RATE_VELOCITY = 
-            Units.inchesToMeters(6.0)*Math.PI/2048/10/11.5;
+            Units.inchesToMeters(6.5)*Math.PI/2048/10/11.5;
 
         public static final double CONVERSION_RATE_POSITION =
-            Units.inchesToMeters(6.0)*Math.PI/2048/11.5;
+            Units.inchesToMeters(6.5)*Math.PI/2048/11.5;
 
     }
 

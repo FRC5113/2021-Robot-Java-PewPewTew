@@ -136,7 +136,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    String trajectoryJSON = "output/FirstReverseBouncePath.wpilib.json";
+    String trajectoryJSON = "output/SCurve.wpilib.json";
     
     Trajectory trajectory = null;
     try {

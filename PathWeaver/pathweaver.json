@@ -1,9 +1,9 @@
 {
   "lengthUnit": "Meter",
   "exportUnit": "Always Meters",
-  "maxVelocity": 1.5,
-  "maxAcceleration": 0.5,
-  "wheelBase": 0.66,
-  "gameName": "Barrel Racing Path",
+  "maxVelocity": 2.0,
+  "maxAcceleration": 2.0,
+  "wheelBase": 0.6720082224258779,
+  "gameName": "Bounce Path",
   "outputDir": "../src/main/java/frc/robot"
 }
