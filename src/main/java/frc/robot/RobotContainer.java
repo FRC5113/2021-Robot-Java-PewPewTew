@@ -88,10 +88,11 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(driveController, xboxLeftBumper)
-        .whenPressed(() -> driveTrain.setMaxOutput(0.5))
-        .whenReleased(() -> driveTrain.setMaxOutput(1));
+    //new JoystickButton(driveController, xboxLeftBumper)
+        //.whenPressed(() -> driveTrain.setMaxOutput(0.5))
+        //.whenReleased(() -> driveTrain.setMaxOutput(1));
 
+    new JoystickButton(driveController, xboxLeftBumper)
     new JoystickButton(driveController, xboxAButton)
         .whileHeld(new IndexCommand(indexer), false);
     
@@ -101,11 +102,9 @@ public class RobotContainer {
     new Trigger(() -> (driveController.getTriggerAxis(Hand.kRight) > 0.75))
         .whileActiveContinuous(new SpinUpCommand(shooter, hopper, feet17halffront));
         
-    new Trigger(() -> (driveController.getTriggerAxis(Hand.kLeft) > 0.75))
-        .whileActiveContinuous(new HopperMove(hopper));
     
-    //new Trigger(() -> (driveController.getTriggerAxis(Hand.kLeft) > 0.75))
-    //    .whileActiveContinuous(new CenterTargetRobot(driveTrain, limelight));
+    new Trigger(() -> (driveController.getTriggerAxis(Hand.kLeft) > 0.75))
+        .whileActiveContinuous(new CenterTargetRobot(driveTrain, limelight));
   }
 
   public double getDriveLeftVal() {
