@@ -37,6 +37,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.CenterTargetRobot;
 import frc.robot.commands.HopperMove;
 import frc.robot.commands.IndexCommand;
 import frc.robot.commands.SpinUpCommand;
@@ -92,7 +93,7 @@ public class RobotContainer {
         //.whenPressed(() -> driveTrain.setMaxOutput(0.5))
         //.whenReleased(() -> driveTrain.setMaxOutput(1));
 
-    new JoystickButton(driveController, xboxLeftBumper)
+    new JoystickButton(driveController, xboxLeftBumper);
     new JoystickButton(driveController, xboxAButton)
         .whileHeld(new IndexCommand(indexer), false);
     
